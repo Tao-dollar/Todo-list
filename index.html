@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f7f7f2" />
+    <meta
+      name="description"
+      content="A simple, thoughtful to-do list to help you focus on what matters today."
+    />
+    <title>Daylight — A little more focus</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="#main" aria-label="Daylight home">
+          <span class="brand-icon" aria-hidden="true">✳</span>
+          <span>daylight<span class="brand-period">.</span></span>
+        </a>
+        <span class="topbar-note"
+          ><span class="online-dot"></span> Your day, at your pace</span
+        >
+        <button
+          class="theme-toggle"
+          id="theme-toggle"
+          type="button"
+          aria-label="Switch to dark mode"
+          title="Switch to dark mode"
+        >
+          <span class="theme-icon" aria-hidden="true">☾</span>
+        </button>
+      </header>
+
+      <section class="intro" aria-labelledby="page-title">
+        <p class="eyebrow">
+          <span id="today-date"></span> <span aria-hidden="true">·</span> A
+          fresh start
+        </p>
+        <h1 id="page-title">A little more <span>focus.</span></h1>
+        <p class="intro-copy">
+          Make space for what matters. One small step at a time.
+        </p>
+      </section>
+
+      <section class="todo-card" aria-label="Your to-do list">
+        <div class="progress-section">
+          <div class="progress-copy">
+            <div>
+              <p class="progress-label" id="progress-label">TODAY’S PROGRESS</p>
+              <p class="progress-count" id="progress-count">
+                You’re just getting started
+              </p>
+            </div>
+            <span class="progress-percent" id="progress-percent">0%</span>
+          </div>
+          <div
+            class="progress-track"
+            id="progress-track"
+            role="progressbar"
+            aria-label="Tasks completed"
+            aria-valuemin="0"
+            aria-valuemax="100"
+            aria-valuenow="0"
+          >
+            <span class="progress-fill" id="progress-fill"></span>
+          </div>
+        </div>
+
+        <nav
+          class="weekday-nav"
+          id="weekday-nav"
+          aria-label="Choose a weekday"
+        ></nav>
+        <div class="selected-day-heading">
+          <div>
+            <p class="selected-day-title" id="selected-day-title"></p>
+            <p class="selected-day-copy">Your tasks for this day</p>
+          </div>
+          <span class="selected-day-count" id="selected-day-count"
+            >0 tasks</span
+          >
+        </div>
+
+        <form class="add-form" id="add-form">
+          <label class="sr-only" for="new-task">Add a task</label>
+          <span class="add-icon" aria-hidden="true">＋</span>
+          <input
+            id="new-task"
+            name="task"
+            type="text"
+            maxlength="180"
+            placeholder="What would you like to get done?"
+            autocomplete="off"
+            required
+          />
+          <button class="add-button" type="submit">
+            Add task <span aria-hidden="true">↗</span>
+          </button>
+        </form>
+
+        <div class="list-toolbar">
+          <div class="filters" role="group" aria-label="Filter tasks">
+            <button
+              class="filter-button is-active"
+              type="button"
+              data-filter="all"
+              aria-pressed="true"
+            >
+              All <span id="all-count">0</span>
+            </button>
+            <button
+              class="filter-button"
+              type="button"
+              data-filter="active"
+              aria-pressed="false"
+            >
+              To do <span id="active-count">0</span>
+            </button>
+            <button
+              class="filter-button"
+              type="button"
+              data-filter="completed"
+              aria-pressed="false"
+            >
+              Done <span id="completed-count">0</span>
+            </button>
+          </div>
+          <button
+            class="clear-button"
+            id="clear-completed"
+            type="button"
+            disabled
+          >
+            Clear completed
+          </button>
+        </div>
+
+        <ul class="task-list" id="task-list" aria-label="Tasks"></ul>
+        <div class="empty-state" id="empty-state" aria-live="polite">
+          <span class="empty-illustration" aria-hidden="true">✦</span>
+          <p class="empty-title" id="empty-title">A clean slate.</p>
+          <p class="empty-copy" id="empty-copy">
+            Add a task above and make today yours.
+          </p>
+        </div>
+
+        <p class="storage-note">
+          <span aria-hidden="true">↳</span> Your tasks are saved on this device.
+        </p>
+      </section>
+
+      <footer class="page-footer">
+        <span>Progress over perfection.</span>
+        <span>Made for your everyday <span aria-hidden="true">♡</span></span>
+      </footer>
+      <p
+        class="sr-only"
+        id="announcements"
+        role="status"
+        aria-live="polite"
+      ></p>
+    </main>
+  </body>
+</html>
