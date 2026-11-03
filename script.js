@@ -36,10 +36,12 @@ const selectedDayCount = document.querySelector("#selected-day-count");
 const progressLabel = document.querySelector("#progress-label");
 const themeToggle = document.querySelector("#theme-toggle");
 const themeIcon = themeToggle.querySelector(".theme-icon");
+const installButton = document.querySelector("#install-button");
 
 let tasks = loadTasks();
 let currentFilter = "all";
 let editingTaskId = null;
+let deferredInstallPrompt = null;
 
 function loadTasks() {
   try {
@@ -368,6 +370,43 @@ themeToggle.addEventListener("click", () => {
   announce(`${nextTheme === "dark" ? "Dark" : "Light"} mode enabled.`);
 });
 
+window.addEventListener("beforeinstallprompt", (event) => {
+  event.preventDefault();
+  deferredInstallPrompt = event;
+  installButton.textContent = "Install app";
+});
+
+installButton.addEventListener("click", async () => {
+  if (deferredInstallPrompt) {
+    deferredInstallPrompt.prompt();
+    const { outcome } = await deferredInstallPrompt.userChoice;
+    announce(
+      outcome === "accepted"
+        ? "Daylight is being installed."
+        : "App installation was dismissed.",
+    );
+    deferredInstallPrompt = null;
+    return;
+  }
+
+  const isIOS = /iphone|ipad|ipod/i.test(window.navigator.userAgent);
+  announce(
+    isIOS
+      ? "To install Daylight, tap Share, then Add to Home Screen."
+      : "To install Daylight, open your browser menu and choose Install app or Add to Home screen.",
+  );
+});
+
+window.addEventListener("appinstalled", () => {
+  deferredInstallPrompt = null;
+  installButton.hidden = true;
+  announce("Daylight has been installed.");
+});
+
+if (window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone) {
+  installButton.hidden = true;
+}
+
 taskList.addEventListener("click", (event) => {
   const button = event.target.closest("button[data-action]");
   if (!button) return;
@@ -459,3 +498,11 @@ try {
 applyTheme(savedTheme);
 renderWeekdays();
 renderTasks();
+
+if ("serviceWorker" in navigator && window.isSecureContext) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./service-worker.js").catch(() => {
+      announce("Offline support could not be enabled in this browser.");
+    });
+  });
+}

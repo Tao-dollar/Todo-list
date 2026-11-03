@@ -1,0 +1,19 @@
+{
+  "id": "./",
+  "name": "Daylight — A little more focus",
+  "short_name": "Daylight",
+  "description": "A simple, thoughtful to-do list to help you focus on what matters today.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f7f7f2",
+  "theme_color": "#f7f7f2",
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
